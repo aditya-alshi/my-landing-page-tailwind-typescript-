@@ -52,7 +52,6 @@ if (sideBar != null && menuButton != null &&
         resetTheForm(elementsIds);
     });
     formSubmitButton.addEventListener("click", function () {
-        console.log("submit is clicked");
         var validEmailResult = validEmail(emailInput, (emailError));
         var validPasswordResult = validPassword(passwordInput, passWordError);
         var validConfirmPasswordResult = validConfirmPassword(confirmPassword, passwordConfirmError, passwordInput);
@@ -117,8 +116,8 @@ function invalid(inputElement, errorMessage) {
 // since all the type narrowing is done before calling this function it is safe to assert types using 'as' keyword
 function resetTheForm(_a) {
     var blurBackground = _a.blurBackground, formWrapper = _a.formWrapper, emailError = _a.emailError, emailInput = _a.emailInput, formSubmitMessage = _a.formSubmitMessage, passwordInput = _a.passwordInput, passWordError = _a.passWordError, confirmPassword = _a.confirmPassword, passwordConfirmError = _a.passwordConfirmError, form = _a.form;
-    blurBackground.classList.toggle("hidden");
-    formWrapper.classList.toggle("hidden");
+    blurBackground.classList.remove("hidden");
+    formWrapper.classList.remove("hidden");
     emailError.classList.remove("text-red-500");
     emailInput.classList.remove("border-green-500", "text-red-500", "border-red-500");
     formSubmitMessage.classList.add("opacity-0");

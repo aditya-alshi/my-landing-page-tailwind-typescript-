@@ -109,9 +109,6 @@ if (
     });
 
     formSubmitButton.addEventListener("click", () => {
-        console.log("submit is clicked");
-
-
         const validEmailResult = validEmail(emailInput as HTMLInputElement, (emailError));
         const validPasswordResult = validPassword(passwordInput as HTMLInputElement, passWordError);
         const validConfirmPasswordResult = validConfirmPassword(confirmPassword as HTMLInputElement, passwordConfirmError, passwordInput as HTMLInputElement);
@@ -194,8 +191,8 @@ function resetTheForm({
     passwordConfirmError,
     form }: ElementIds): void {
         
-        (blurBackground as HTMLElement).classList.toggle("hidden");
-        (formWrapper as HTMLElement).classList.toggle("hidden");
+        (blurBackground as HTMLElement).classList.remove("hidden");
+        (formWrapper as HTMLElement).classList.remove("hidden");
         
         (emailError as HTMLElement).classList.remove("text-red-500");
        
