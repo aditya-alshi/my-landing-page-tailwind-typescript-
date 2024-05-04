@@ -95,8 +95,8 @@ if (
     });
 
     signUpButton.addEventListener("click", () => {
-        blurBackground.classList.toggle("hidden");
-        formWrapper.classList.toggle("hidden");
+        blurBackground.classList.remove("hidden");
+        formWrapper.classList.remove("hidden");
     });
 
     blurBackground.addEventListener("click", () => {

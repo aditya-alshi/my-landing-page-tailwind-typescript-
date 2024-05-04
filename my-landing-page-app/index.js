@@ -42,8 +42,8 @@ if (sideBar != null && menuButton != null &&
         sideBar.classList.toggle("left-0");
     });
     signUpButton.addEventListener("click", function () {
-        blurBackground.classList.toggle("hidden");
-        formWrapper.classList.toggle("hidden");
+        blurBackground.classList.remove("hidden");
+        formWrapper.classList.remove("hidden");
     });
     blurBackground.addEventListener("click", function () {
         resetTheForm(elementsIds);
