@@ -1,25 +1,73 @@
-const sideBar = document.querySelector<HTMLElement>("#side--bar");
-const menuButton = document.querySelector<HTMLDivElement>("#menu--button");
-const rightContainer = document.querySelector<HTMLDivElement>("#right--container");
-const signUpButton = document.querySelector<HTMLButtonElement>("#sign--up--button");
+// const sideBar = document.querySelector<HTMLElement>("#side--bar");
+// const menuButton = document.querySelector<HTMLDivElement>("#menu--button");
+// const rightContainer = document.querySelector<HTMLDivElement>("#right--container");
+// const signUpButton = document.querySelector<HTMLButtonElement>("#sign--up--button");
 
-const form = document.querySelector<HTMLFormElement>("#the--form");
-const blurBackground = document.querySelector<HTMLDivElement>("#blur-backgroud");
-const formWrapper = document.querySelector<HTMLDivElement>("#form--wrapper");
-const formClosedButton = document.querySelector<HTMLDivElement>("#close--form--button");
+// const form = document.querySelector<HTMLFormElement>("#the--form");
+// const blurBackground = document.querySelector<HTMLDivElement>("#blur-backgroud");
+// const formWrapper = document.querySelector<HTMLDivElement>("#form--wrapper");
+// const formClosedButton = document.querySelector<HTMLDivElement>("#close--form--button");
 
-// all form inputs 
-const nameInput = document.querySelector<HTMLInputElement>("#name");
-const emailInput = document.querySelector<HTMLInputElement>("#email");
-const passwordInput = document.querySelector<HTMLInputElement>("#password");
-const confirmPassword = document.querySelector<HTMLInputElement>("#confirm--password");
-const formSubmitButton = document.querySelector<HTMLButtonElement>("#form--submit--button");
-const formSubmitMessage = document.querySelector<HTMLParagraphElement>("#submiteed--message");
+// // all form inputs 
+// const nameInput = document.querySelector<HTMLInputElement>("#name");
+// const emailInput = document.querySelector<HTMLInputElement>("#email");
+// const passwordInput = document.querySelector<HTMLInputElement>("#password");
+// const confirmPassword = document.querySelector<HTMLInputElement>("#confirm--password");
+// const formSubmitButton = document.querySelector<HTMLButtonElement>("#form--submit--button");
+// const formSubmitMessage = document.querySelector<HTMLElement>("#submiteed--message");
 
-// all error messages 
-const emailError = document.querySelector<HTMLParagraphElement>("#email--error");
-const passWordError = document.querySelector<HTMLParagraphElement>("#password--error");
-const passwordConfirmError = document.querySelector<HTMLParagraphElement>("#confirm--pass--error");
+// // all error messages 
+// const emailError = document.querySelector<HTMLParagraphElement>("#email--error");
+// const passWordError = document.querySelector<HTMLParagraphElement>("#password--error");
+// const passwordConfirmError = document.querySelector<HTMLParagraphElement>("#confirm--pass--error");
+
+type theHtmlElements = HTMLInputElement | HTMLElement | HTMLFormElement | null;
+
+interface ElementIds {
+    [ids: string]: theHtmlElements
+}
+
+
+const elementsIds: ElementIds = {
+    sideBar: document.querySelector<HTMLElement>("#side--bar"),
+    menuButton: document.querySelector<HTMLElement>("#menu--button"),
+    rightContainer: document.querySelector<HTMLElement>("#right--container"),
+    signUpButton: document.querySelector<HTMLElement>("#sign--up--button"),
+    form: document.querySelector<HTMLFormElement>("#the--form"),
+    blurBackground: document.querySelector<HTMLElement>("#blur-backgroud"),
+    formWrapper: document.querySelector<HTMLElement>("#form--wrapper"),
+    formClosedButton: document.querySelector<HTMLElement>("#close--form--button"),
+    nameInput: document.querySelector<HTMLInputElement>("#name"),
+    emailInput: document.querySelector<HTMLInputElement>("#email"),
+    passwordInput: document.querySelector<HTMLInputElement>("#password"),
+    confirmPassword: document.querySelector<HTMLInputElement>("#confirm--password"),
+    formSubmitButton: document.querySelector<HTMLElement>("#form--submit--button"),
+    formSubmitMessage: document.querySelector<HTMLElement>("#submiteed--message"),
+    emailError: document.querySelector<HTMLElement>("#email--error"),
+    passWordError: document.querySelector<HTMLElement>("#password--error"),
+    passwordConfirmError: document.querySelector<HTMLElement>("#confirm--pass--error")
+}
+
+const {
+    sideBar,
+    menuButton,
+    rightContainer,
+    signUpButton,
+    form,
+    blurBackground,
+    formWrapper,
+    formClosedButton,
+    nameInput,
+    emailInput,
+    passwordInput,
+    confirmPassword,
+    formSubmitButton,
+    formSubmitMessage,
+    emailError,
+    passWordError,
+    passwordConfirmError
+} = elementsIds;
+
 
 if (
     sideBar != null && menuButton != null &&
@@ -49,93 +97,55 @@ if (
     signUpButton.addEventListener("click", () => {
         blurBackground.classList.toggle("hidden");
         formWrapper.classList.toggle("hidden");
-    })
+    });
 
     blurBackground.addEventListener("click", () => {
-        blurBackground.classList.toggle("hidden");
-        formWrapper.classList.toggle("hidden");
+        resetTheForm(elementsIds);
+    });
 
-        emailError.classList.remove("text-red-500")
-        emailInput.classList.remove("border-green-500", "text-red-500", "border-red-500")
 
-        formSubmitMessage.classList.add("opacity-0");
-
-        passwordInput.classList.remove("border-green-500")
-        passWordError.classList.remove("text-red-500")
-        passwordInput.classList.remove("border-red-500")
-
-        confirmPassword.classList.remove("border-green-500")
-        passwordConfirmError.classList.remove("text-red-500")
-        confirmPassword.classList.remove("border-red-500")
-
-        form.reset()
-    })
-    
     formClosedButton.addEventListener("click", () => {
-        blurBackground.classList.toggle("hidden");
-        formWrapper.classList.toggle("hidden");
+        resetTheForm(elementsIds)
+    });
 
-        emailError.classList.remove("text-red-500")
-        emailInput.classList.remove("border-green-500", "text-red-500", "border-red-500")
-
-        formSubmitMessage.classList.add("opacity-0");
-
-        passwordInput.classList.remove("border-green-500")
-        passWordError.classList.remove("text-red-500")
-        passwordInput.classList.remove("border-red-500")
-
-        confirmPassword.classList.remove("border-green-500")
-        passwordConfirmError.classList.remove("text-red-500")
-        confirmPassword.classList.remove("border-red-500")
-
-        form.reset()
-    })
-    
-    formSubmitButton.addEventListener("click", ()=>{
+    formSubmitButton.addEventListener("click", () => {
         console.log("submit is clicked");
 
-        const validEmailResult = validEmail(emailInput, emailError);
-        const validPasswordResult = validPassword(passwordInput, passWordError);
-        const validConfirmPasswordResult = validConfirmPassword(confirmPassword, passwordConfirmError,passwordInput)
 
-        if(validEmailResult && validPasswordResult && validConfirmPasswordResult){
-            formSubmitMessage.classList.remove("opacity-0")
-            formSubmitButton.disabled = true;
+        const validEmailResult = validEmail(emailInput as HTMLInputElement, (emailError));
+        const validPasswordResult = validPassword(passwordInput as HTMLInputElement, passWordError);
+        const validConfirmPasswordResult = validConfirmPassword(confirmPassword as HTMLInputElement, passwordConfirmError, passwordInput as HTMLInputElement);
+
+        if (validEmailResult && validPasswordResult && validConfirmPasswordResult) {
+            formSubmitMessage.classList.remove("opacity-0");
+            (formSubmitButton as HTMLFormElement).disabled = true;
             setTimeout(() => {
                 formClosedButton.click();
             }, 2000);
-        }else{
+        } else {
             formSubmitMessage.classList.add("opacity-0");
         }
     })
 
 }
 
-function validEmail(email: HTMLInputElement, emailError: HTMLParagraphElement): boolean {
+function validEmail(email: HTMLInputElement, emailError: HTMLElement): boolean {
     let pattern = /.+@.+\.com/
-    if(email.value.trim().match(pattern)){
-        emailError.classList.remove("text-red-500")
-        email.classList.remove("border-red-500")
-        email.classList.add("border-green-500")
+    if (email.value.trim().match(pattern)) {
+        valid(email, emailError)
         return true
-    }else{
-        email.classList.remove("border-green-500")
-        email.classList.add("border-red-500")
-        emailError.classList.add("text-red-500")
+    } else {
+        invalid(email, emailError)
         return false
     }
 }
 
-function validPassword(password: HTMLInputElement, passwordErr: HTMLParagraphElement): boolean{
-    if(password.value === "" || password.value.length < 8){
-        password.classList.remove("border-green-500")
-        password.classList.add("border-red-500")
-        passwordErr.classList.add("text-red-500")
+function validPassword(password: HTMLInputElement, passwordErr: HTMLElement): boolean {
+    if (password.value === "" || password.value.length < 8) {
+        invalid(password, passwordErr)
         return false
-    }else{
-        passwordErr.classList.remove("text-red-500")
-        password.classList.remove("border-red-500")
-        password.classList.add("border-green-500")
+    } else {
+        valid(password, passwordErr)
         return true
     }
 }
@@ -144,18 +154,63 @@ function validPassword(password: HTMLInputElement, passwordErr: HTMLParagraphEle
 // add green border to confirm password 
 // else
 // add red border as well ass highlight the error message
-function validConfirmPassword(confirpass: HTMLInputElement, confirmPassErr: HTMLParagraphElement, password: HTMLInputElement): boolean{
+
+function validConfirmPassword(confirpass: HTMLInputElement, confirmPassErr: HTMLElement, password: HTMLInputElement): boolean {
     
-    if( password.value === "" || confirpass.value === "" || confirpass.value !== password.value){
-        confirpass.classList.remove("border-green-500")
-        confirpass.classList.add("border-red-500")
-        confirmPassErr.classList.add("text-red-500")
+    if (password.value === "" || confirpass.value === "" || confirpass.value !== password.value) {
+        invalid(confirpass, confirmPassErr);
         return false
-    }else{
-        confirmPassErr.classList.remove("text-red-500")
-        confirpass.classList.remove("border-red-500")
-        confirpass.classList.add("border-green-500")
+    } else {
+        valid(confirpass, confirmPassErr);
         return true
 
     }
 }
+
+function valid(inputElement: HTMLInputElement, errorMessage: HTMLElement): void {
+    errorMessage.classList.remove("text-red-500");
+    inputElement.classList.remove("border-red-500");
+    inputElement.classList.add("border-green-500");
+}
+
+function invalid(inputElement: HTMLInputElement, errorMessage: HTMLElement): void {
+    inputElement.classList.remove("border-green-500")
+    inputElement.classList.add("border-red-500")
+    errorMessage.classList.add("text-red-500")
+}
+
+
+// reset logic
+// since all the type narrowing is done before calling this function it is safe to assert types using 'as' keyword
+function resetTheForm({
+    blurBackground,
+    formWrapper,
+    emailError,
+    emailInput,
+    formSubmitMessage,
+    passwordInput,
+    passWordError,
+    confirmPassword,
+    passwordConfirmError,
+    form }: ElementIds): void {
+        
+        (blurBackground as HTMLElement).classList.toggle("hidden");
+        (formWrapper as HTMLElement).classList.toggle("hidden");
+        
+        (emailError as HTMLElement).classList.remove("text-red-500");
+       
+        (emailInput as HTMLInputElement).classList.remove("border-green-500", "text-red-500", "border-red-500");
+        
+        (formSubmitMessage as HTMLElement).classList.add("opacity-0");
+        
+        (passwordInput as HTMLInputElement).classList.remove("border-green-500", "border-red-500");
+        (passWordError as HTMLElement).classList.remove("text-red-500");
+        
+        (confirmPassword as HTMLInputElement).classList.remove("border-green-500", "border-red-500");
+        (passwordConfirmError as HTMLElement).classList.remove("text-red-500");
+        // confirmPassword.classList.remove("border-red-500");
+        
+        (form as HTMLFormElement).reset()
+        
+    }
+  
